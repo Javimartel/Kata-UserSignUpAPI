@@ -1,8 +1,15 @@
-import { FakeDatabase } from '../core/fakeDataBase';
+import { FakeDatabase, UserService } from '../core/fakeDataBase';
 
 describe('User Sign Up Test', () => {
     it('should not add user if email is empty', () => {
-        const database = new FakeDatabase();
-        expect(database.save('')).toHaveBeenCalled();
+        const fakeDataBase = new FakeDatabase();
+        const service = new UserService(fakeDataBase);
+        const spy = jest.spyOn(service, 'save');
+        service.save('');
+
+        const users = service.getUsers();
+
+        expect(spy).toHaveBeenCalled();
+        expect(users.length).toBe(0);
     });
 });
