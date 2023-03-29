@@ -6,6 +6,11 @@ export class UserService {
     saveUserInRepositoryBy(email: string) {
         const emailIsNotEmpty = email !== '';
         this.validateFormatOf(email);
+        const users = this.userRepository.getUsers();
+
+        if (users.includes(email)) {
+            throw new Error(`"${email}" already exists`);
+        }
 
         if (emailIsNotEmpty) {
             this.userRepository.save(email);
