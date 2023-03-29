@@ -5,11 +5,11 @@ describe('User Sign Up Test', () => {
     it('should not add user if email is empty', () => {
         const fakeDatabase = new FakeDatabase();
         const service = new UserService(fakeDatabase);
-        const spy = jest.spyOn(service, 'save');
+        const spy = jest.spyOn(service, 'saveUserInRepositoryBy');
         const email = '';
-        service.save(email);
+        service.saveUserInRepositoryBy(email);
 
-        const users = service.getUsers();
+        const users = service.getUsersFromRepository();
 
         expect(spy).toHaveBeenCalled();
         expect(users.length).toBe(0);
@@ -18,11 +18,11 @@ describe('User Sign Up Test', () => {
     it('should throw error if email has incorrect format', () => {
         const fakeDatabase = new FakeDatabase();
         const service = new UserService(fakeDatabase);
-        const spy = jest.spyOn(service, 'save');
+        const spy = jest.spyOn(service, 'saveUserInRepositoryBy');
         const email = 'email.com';
         
         expect(() => {
-            service.save(email);
+            service.saveUserInRepositoryBy(email);
         }).toThrow(`"${email}" has incorrect format`);
         expect(spy).toHaveBeenCalled();
     });
