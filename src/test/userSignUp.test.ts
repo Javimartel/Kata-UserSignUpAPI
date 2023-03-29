@@ -26,4 +26,18 @@ describe('User Sign Up Test', () => {
         }).toThrow(`"${email}" has incorrect format`);
         expect(spy).toHaveBeenCalled();
     });
+
+    it('should add user if email is correct', () => {
+        const fakeDatabase = new FakeDatabase();
+        const service = new UserService(fakeDatabase);
+        const spy = jest.spyOn(service, 'saveUserInRepositoryBy');
+        const email = 'javi@gmail.com';
+        service.saveUserInRepositoryBy(email);
+
+        const users = service.getUsersFromRepository();
+
+        expect(spy).toHaveBeenCalled();
+        expect(users.length).toBe(1);
+        expect(users[0]).toBe(email);
+    });
 });
