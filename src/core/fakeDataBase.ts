@@ -8,6 +8,6 @@ export class FakeDatabase implements UserRepository {
     }
 
     getUsers() {
-        return [];
+        return this.users;
     }
 }
