@@ -42,4 +42,15 @@ describe('User Sign Up Test', () => {
         expect(users.length).toBe(1);
         expect(users[0]).toBe(email);
     });
+
+    it('should throw error if email already exists', () => {
+        const email = 'javi@gmail.com';
+        service.saveUserInRepositoryBy(email);
+        const repeated_email = 'javi@gmail.com';
+
+        expect(() => {
+            service.saveUserInRepositoryBy(repeated_email);
+        }).toThrow(`"${repeated_email}" already exists`);
+        expect(spy).toHaveBeenCalled();
+    });
 });
