@@ -6,11 +6,7 @@ export class UserService {
     saveUserInRepositoryBy(email: string) {
         const emailIsNotEmpty = email !== '';
         this.validateFormatOf(email);
-        const users = this.userRepository.getUsers();
-
-        if (users.includes(email)) {
-            throw new Error(`"${email}" already exists`);
-        }
+        this.validateIfUserAlreadyExistsBy(email);
 
         if (emailIsNotEmpty) {
             this.userRepository.save(email);
@@ -26,6 +22,15 @@ export class UserService {
         }
     }
 
+    private validateIfUserAlreadyExistsBy(email: string) {
+        const users = this.userRepository.getUsers();
+        const userAlreadyExists = users.includes(email);
+
+        if (userAlreadyExists) {
+            throw new Error(`"${email}" already exists`);
+        }
+    }
+        
     getUsersFromRepository() {
         return this.userRepository.getUsers();
     }
