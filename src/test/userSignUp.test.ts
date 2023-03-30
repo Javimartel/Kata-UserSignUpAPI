@@ -53,4 +53,11 @@ describe('User Sign Up Test', () => {
         }).toThrow(`"${repeated_email}" already exists`);
         expect(spy).toHaveBeenCalled();
     });
+
+    it('should throw error if email has incorrect format with jest.fn', () => {
+        const email = 'email.com';
+        service.validateFormatOf = jest.fn(() => {
+            throw new Error(`"${email}" has incorrect format`);
+        });
+    });
 });
