@@ -60,4 +60,14 @@ describe('User Sign Up Test', () => {
             throw new Error(`"${email}" has incorrect format`);
         });
     });
+
+    it('should add user if email is correct with jest.fn', () => {
+        const email = 'javi@gmail.com';
+        fakeDatabase.getUsers = jest.fn(() => [email]);
+
+        const users = service.getUsersFromRepository();
+
+        expect(users.length).toBe(1);
+        expect(users[0]).toBe(email);
+    });
 });
